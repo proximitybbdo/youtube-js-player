@@ -1,0 +1,53 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<title>Video Youtube JS GA</title>
+	<meta name="description" content="ProximityBBDO" />
+	<meta name="author" content="ProximityBBDO" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+
+  <script type="text/javascript" src="swfobject.js"></script>    
+
+  <div id="ytapiplayer">
+    1: You need Flash player 8+ and JavaScript enabled to view this video.
+  </div>
+
+  <div id="ytapiplayer2">
+    2: You need Flash player 8+ and JavaScript enabled to view this video.
+  </div>
+
+  <script type="text/javascript" src="../src/youtubeplayer.js"></script>    
+  <script type="text/javascript">
+
+    var ytp = new YouTubePlayer('ytapiplayer', 'eQtai7HMbuQ'); // div id and video id;
+    var ytp2 = new YouTubePlayer('ytapiplayer2', 'CdJHuquKoC4'); // div id and video id;
+
+    var ytpm = new YouTubePlayerManager();
+
+    ytpm.add(ytp);
+    ytpm.add(ytp2);
+
+    setTimeout(function() {
+        ytp2.add_player();
+    }, 2000);
+
+    ytp.add_player();
+
+    ytp.on_state_change = function(state) {
+      console.log(state)
+    }
+
+    ytp.on_progress_change = function(perc) {
+      console.log(perc)
+    }
+
+  </script>
+
+</body>
+</html>
