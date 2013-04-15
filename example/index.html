@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	
+
 	<title>Video Youtube JS GA</title>
 	<meta name="description" content="ProximityBBDO" />
 	<meta name="author" content="ProximityBBDO" />
@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <script type="text/javascript" src="swfobject.js"></script>    
+  <script type="text/javascript" src="swfobject.js"></script>
 
   <div id="ytapiplayer">
     1: You need Flash player 8+ and JavaScript enabled to view this video.
@@ -22,7 +22,7 @@
     2: You need Flash player 8+ and JavaScript enabled to view this video.
   </div>
 
-  <script type="text/javascript" src="../src/youtubeplayer.js"></script>    
+  <script type="text/javascript" src="../src/youtubeplayer.js"></script>
   <script type="text/javascript">
 
     var ytp = new YouTubePlayer('ytapiplayer', 'eQtai7HMbuQ'); // div id and video id;
@@ -34,17 +34,25 @@
     ytpm.add(ytp2);
 
     setTimeout(function() {
-        ytp2.add_player();
+      ytp2.add_player();
     }, 2000);
 
     ytp.add_player();
 
+    ytp2.on_state_change = function(state) {
+      console.log('2: ' + state)
+    }
+
+    ytp2.on_progress_change = function(perc) {
+      console.log('2: ' + perc)
+    }
+
     ytp.on_state_change = function(state) {
-      console.log(state)
+      console.log('1: ' + state)
     }
 
     ytp.on_progress_change = function(perc) {
-      console.log(perc)
+      console.log('1: ' + perc)
     }
 
   </script>
