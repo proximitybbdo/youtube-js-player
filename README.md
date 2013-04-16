@@ -27,6 +27,9 @@ ytp.on_progress_change = function(perc) {
 ytp.add_player();
 ```
 
+## Dependencies
+- swfobject (https://code.google.com/p/swfobject/)
+
 ## Info
 
 Proximity BBDO
