@@ -8,23 +8,42 @@ This first one is `on_state_change` to track / log video events such as 'unstart
 
 The second one is `on_progress_change` to track down video progress (in percentage).
 
-## Usage
+## Usage Flash Player
 
 ```
-var ytp = new YouTubePlayer('ytapiplayer', 'eQtai7HMbuQ');
+var ytp_flashplayer = new YouTubePlayer('ytapiplayer', 'eQtai7HMbuQ');
 var ytpm = new YouTubePlayerManager();
 
-ytpm.add(ytp);
+ytpm.add(ytp_flashplayer);
 
-ytp.on_state_change = function(state) {
+ytp_flashplayer.on_state_change = function(state) {
   console.log(state)
 }
 
-ytp.on_progress_change = function(perc) {
+ytp_flashplayer.on_progress_change = function(perc) {
   console.log(perc)
 }
 
-ytp.add_player();
+ytp_flashplayer.add_player();
+```
+
+## Usage HTML 5
+
+```
+var ytp_html5 = new YouTubePlayer('ytapiplayer', 'eQtai7HMbuQ', null, null, true);
+var ytpm = new YouTubePlayerManager();
+
+ytpm.add(ytp_html5);
+
+ytp_html5.on_state_change = function(state) {
+  console.log(state)
+}
+
+ytp_html5.on_progress_change = function(perc) {
+  console.log(perc)
+}
+
+ytp_html5.add_player();
 ```
 
 ## Dependencies

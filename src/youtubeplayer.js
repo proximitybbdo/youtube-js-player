@@ -17,7 +17,10 @@
 
       for (_i = 0, _len = this.players.length; _i < _len; _i++) {
         player = this.players[_i];
-        player.player_ready(player_id);
+
+        if(!player.html5) {
+          player.player_ready(player_id);
+        }
       }
     }
 
@@ -59,14 +62,19 @@
     // Optional via constructor
     YouTubePlayer.prototype.video_width = "425";
     YouTubePlayer.prototype.video_height = "356";
+    YouTubePlayer.prototype.html5 = false;
 
-    function YouTubePlayer(div_id, video_id, video_width, video_height) {
+    function YouTubePlayer(div_id, video_id, video_width, video_height, html5) {
       if(video_width == null) {
         video_width = 425;
       }
 
       if(video_height == null) {
         video_height = 356;
+      }
+
+      if(html5 == null) {
+        html5 = false;
       }
 
       if(div_id == null || video_id == null) {
@@ -77,6 +85,7 @@
       this.div_id = div_id;
       this.video_width = video_width;
       this.video_height = video_height;
+      this.html5 = html5;
 
       var rand = parseInt(Math.random() * 999999);
 
@@ -102,11 +111,60 @@
     }
 
     YouTubePlayer.prototype.add_player = function() {
+      if(!this.html5) {
+        this.add_flash_player();
+      } else {
+        this.html5_add_player();
+      }
+    }
+
+    YouTubePlayer.prototype.add_flash_player = function() {
       var video_url = "http://www.youtube.com/v/" + this.video_id + "?enablejsapi=1&playerapiid=" + this.player_id + "&version=3";
       var options = { allowScriptAccess: "always", allowFullScreen: 'true' };
       var attr = { id: this.embed_id, name: this.embed_id };
 
       swfobject.embedSWF(video_url, this.div_id, this.video_width, this.video_height, "8", null, null, options, attr);
+    }
+
+    YouTubePlayer.prototype.html5_add_player = function() {
+      console.log('html5 add player');
+
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var ref = this;
+
+      window["onYouTubeIframeAPIReady"] = function () {
+        ref.html5_api_player_ready();
+      }
+    }
+
+    YouTubePlayer.prototype.html5_player_ready = function(e) {
+      console.log('html5 player ready');
+
+    }
+
+    YouTubePlayer.prototype.html5_api_player_ready = function() {
+      console.log('html5 api player ready');
+
+      var ref = this;
+
+      this.ytplayer = new YT.Player(this.div_id, {
+        height: this.video_height,
+        width: this.video_width,
+        videoId: this.video_id,
+        events: {
+          'onReady': function(e) {
+            ref.html5_player_ready(e);
+          },
+          'onStateChange': function(e) {
+            ref.player_state_changed(e.data);
+          }
+        }
+      });
     }
 
     YouTubePlayer.prototype.interval_player_start = function() {
