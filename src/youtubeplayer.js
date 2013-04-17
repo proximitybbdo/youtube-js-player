@@ -127,8 +127,6 @@
     }
 
     YouTubePlayer.prototype.html5_add_player = function() {
-      console.log('html5 add player');
-
       var tag = document.createElement('script');
 
       tag.src = "https://www.youtube.com/iframe_api";
@@ -142,14 +140,9 @@
       }
     }
 
-    YouTubePlayer.prototype.html5_player_ready = function(e) {
-      console.log('html5 player ready');
-
-    }
+    YouTubePlayer.prototype.html5_player_ready = function(e) { }
 
     YouTubePlayer.prototype.html5_api_player_ready = function() {
-      console.log('html5 api player ready');
-
       var ref = this;
 
       this.ytplayer = new YT.Player(this.div_id, {
